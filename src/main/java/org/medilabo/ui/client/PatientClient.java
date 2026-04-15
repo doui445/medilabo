@@ -31,4 +31,27 @@ public class PatientClient {
 
         return patients != null ? List.of(patients) : List.of();
     }
+
+    public void createPatient(PatientDTO patientDTO) {
+        restClient.post()
+                .uri("")
+                .body(patientDTO)
+                .retrieve()
+                .body(PatientDTO.class);
+    }
+
+    public void updatePatient(Long id, PatientDTO patientDTO) {
+        restClient.put()
+                .uri("/{id}", id)
+                .body(patientDTO)
+                .retrieve()
+                .body(PatientDTO.class);
+    }
+
+    public void deletePatient(Long id) {
+        restClient.delete()
+                .uri("/{id}", id)
+                .retrieve()
+                .toBodilessEntity();
+    }
 }
