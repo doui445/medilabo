@@ -1,7 +1,6 @@
 package org.medilabo.patient.model.dto;
 
 import jakarta.validation.constraints.*;
-import org.medilabo.patient.model.Gender;
 
 import java.time.LocalDate;
 
