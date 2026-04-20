@@ -62,7 +62,7 @@ class PatientServiceTest {
 
     @Test
     @DisplayName("getPatientById should return a patient when patient exists")
-    void testGetPatientByIdFound() {
+    void testGetPatientByIdSuccess() {
         given(patientRepository.findById(1L)).willReturn(Optional.of(patient));
         given(patientMapper.entityToDto(patient)).willReturn(patientDTO);
 
@@ -137,7 +137,7 @@ class PatientServiceTest {
 
     @Test
     @DisplayName("deletePatientById should delete the patient")
-    void testDeletePatientByIdExists() {
+    void testDeletePatientByIdSuccess() {
         given(patientRepository.existsById(1L)).willReturn(true);
 
         patientService.deletePatientById(1L);
@@ -147,7 +147,7 @@ class PatientServiceTest {
 
     @Test
     @DisplayName("deletePatientById should throw not found exception when patient does not exist")
-    void testDeletePatientById() {
+    void testDeletePatientByIdNotFound() {
         given(patientRepository.existsById(1L)).willReturn(false);
 
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> patientService.deletePatientById(1L));
