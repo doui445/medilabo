@@ -26,7 +26,7 @@ public class PatientService {
     public PatientDTO getPatientById(Long id) {
         return patientMapper
                 .entityToDto(patientRepository.findById(id)
-                        .orElseThrow(() -> new EntityNotFoundException("Patient not found with id: " + id)));
+                        .orElseThrow(() -> new EntityNotFoundException("Patient not found with ID: " + id)));
     }
 
     @Transactional
@@ -47,7 +47,7 @@ public class PatientService {
     public PatientDTO updatePatient(Long id, PatientDTO patientDTO) {
         // Check patient exists
         Patient patient = patientRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Patient not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Patient not found with ID: " + id));
 
         // Update patient information with MapStruct
         patientMapper.updateEntityFromDto(patientDTO, patient);
@@ -59,7 +59,7 @@ public class PatientService {
     @Transactional
     public void deletePatientById(Long id) {
         if (!patientRepository.existsById(id)) {
-            throw new EntityNotFoundException("Patient not found with id: " + id);
+            throw new EntityNotFoundException("Patient not found with ID: " + id);
         }
         patientRepository.deleteById(id);
     }

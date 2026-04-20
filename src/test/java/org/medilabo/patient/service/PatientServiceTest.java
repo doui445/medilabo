@@ -80,7 +80,7 @@ class PatientServiceTest {
 
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> patientService.getPatientById(2L));
 
-        assertThat(exception.getMessage()).isEqualTo("Patient not found with id: 2");
+        assertThat(exception.getMessage()).isEqualTo("Patient not found with ID: 2");
         verifyNoInteractions(patientMapper);
     }
 
@@ -130,7 +130,7 @@ class PatientServiceTest {
 
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> patientService.updatePatient(1L, patientDTO));
 
-        assertThat(exception.getMessage()).isEqualTo("Patient not found with id: 1");
+        assertThat(exception.getMessage()).isEqualTo("Patient not found with ID: 1");
         verify(patientRepository, times(0)).save(any());
         verifyNoInteractions(patientMapper);
     }
@@ -152,7 +152,7 @@ class PatientServiceTest {
 
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> patientService.deletePatientById(1L));
 
-        assertThat(exception.getMessage()).isEqualTo("Patient not found with id: 1");
+        assertThat(exception.getMessage()).isEqualTo("Patient not found with ID: 1");
         verify(patientRepository, times(0)).deleteById(1L);
     }
 }
