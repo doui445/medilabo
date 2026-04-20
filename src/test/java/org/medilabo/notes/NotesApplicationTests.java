@@ -1,5 +1,6 @@
 package org.medilabo.notes;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.medilabo.notes.model.Note;
@@ -32,6 +33,11 @@ class NotesApplicationTests {
 
 	@Test
 	void contextLoads() {
+	}
+
+	@AfterEach
+	void tearDown() {
+		noteRepository.deleteAll();
 	}
 
 	@Test
