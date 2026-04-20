@@ -13,11 +13,17 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class Note {
+
     @Id
     private String id;
-    private String title;
+
     private Long patientId;
+
     private String patientName;
+
     private LocalDate date;
-    private String note;
+
+    private String title;
+
+    private String content;
 }
