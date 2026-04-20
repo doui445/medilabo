@@ -69,6 +69,7 @@ class PatientControllerTest {
     @DisplayName("Get All Patients - Success")
     void givenPatients_whenGetPatients_thenReturnPatientList() throws Exception {
         given(patientService.getPatients()).willReturn(List.of(patientDTO));
+
         mockMvc.perform(get("/api/patients"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(1))
