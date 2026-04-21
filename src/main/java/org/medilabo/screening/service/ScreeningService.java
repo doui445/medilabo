@@ -20,7 +20,7 @@ public class ScreeningService {
     private final NoteClient noteClient;
 
     private final List<String> TRIGGERS = List.of("hémoglobine a1c", "microalbumine", "taille", "poids",
-            "fumeur", "fumeuse", "anormal", "cholestérol", "vertige", "rechute", "réaction", "anticorps");
+            "fume", "anormal", "cholestérol", "vertige", "rechute", "réaction", "anticorps");
 
     public String screenPatient(Long patientId) {
         PatientDTO patient  = patientClient.getPatient(patientId);
