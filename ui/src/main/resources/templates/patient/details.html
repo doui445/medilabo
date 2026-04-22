@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<th:block th:replace="~{fragments/head :: head-css}"></th:block>
+	<title>Patient Details</title>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: headerNav}"></div>
+<div class="container">
+	<div class="row">
+		<h2>Patient Details</h2>
+	</div>
+
+	<div class="row mt-4">
+		<div class="col-12">
+			<h3>Diabetes Screening :
+				<span th:switch="${screening}"> <!-- Thymeleaf Switch pour changer les couleurs -->
+                <span th:case="'NONE'" class="badge badge-success">NONE</span>
+                <span th:case="'BORDERLINE'" class="badge badge-warning">BORDERLINE</span>
+                <span th:case="'IN_DANGER'" class="badge badge-danger">IN DANGER</span>
+                <span th:case="'EARLY_ONSET'" class="badge badge-dark">EARLY ONSET</span>
+                <span th:case="*" class="badge badge-secondary" th:text="${screening}">UNKNOWN</span>
+            </span>
+			</h3>
+		</div>
+	</div>
+
+	<div class="row mt-4">
+		<h4>Medical History</h4>
+		<ul class="list-group">
+			<li class="list-group-item" th:each="note : ${notes}"> <!-- Boucle sur les notes du patient -->
+				<strong th:text="${note.date}">Date</strong> - <strong th:text="${note.title}">Title</strong>
+				<p th:text="${note.content}">Content...</p>
+			</li>
+		</ul>
+	</div>
+
+	<div class="row mt-5">
+		<h4>Add a New Note</h4>
+		<form action="#" class="form-horizontal" method="post" style="width: 100%"
+		      th:action="@{/note/add}" th:object="${newNote}">
+
+			<input type="hidden" th:field="*{patientId}">
+			<input type="hidden" th:value="${patient.firstname + ' ' + patient.lastname}" name="patientName">
+
+			<div class="form-group mt-3">
+				<label for="title">Title</label>
+				<input class="form-control" id="title" placeholder="Enter note title..." th:field="*{title}" type="text">
+			</div>
+
+			<div class="form-group mt-3">
+				<label for="content">Doctor's Notes <span class="text-danger">*</span></label>
+				<textarea class="form-control" id="content" rows="4" placeholder="Type observations here..." th:field="*{content}" required></textarea>
+			</div>
+
+			<div class="form-group mt-3">
+				<a class="btn btn-secondary" th:href="@{/patient/list}">Back to List</a>
+				<button class="btn btn-primary" type="submit">Save Note</button>
+			</div>
+		</form>
+	</div>
+</div>
+<div th:replace="~{fragments/footer :: scripts}"></div>
+</body>
+</html>
