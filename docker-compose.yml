@@ -1,0 +1,85 @@
+services:
+  ################### DATABASES ##########################
+  postgres-db:
+    image: postgres:18.3
+    container_name: medilabo_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: medilabo_patient
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: rootroot
+
+  mongodb:
+    image: mongo:8.2.7
+    container_name: medilabo_mongo
+    ports:
+      - "27017:27017"
+
+  ################### APIs ##########################
+  patient-service:
+    build: ./patient
+    container_name: patient-api
+    ports:
+      - "8081:8081"
+    environment:
+      # DATASOURCE CONFIGURATION
+      # "postgres-db" à la place de "localhost"
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/medilabo_patient
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=rootroot
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres-db
+
+  notes-service:
+    build: ./notes
+    container_name: notes-api
+    ports:
+      - "8082:8082"
+    environment:
+      # DATASOURCE CONFIGURATION
+      # "mongodb" à la place de "localhost"
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/medilabo_notes
+    depends_on:
+      - mongodb
+
+  screening-service:
+    build: ./screening
+    container_name: screening-api
+    ports:
+      - "8083:8083"
+    environment:
+      - PATIENT_API_URL=http://patient-service:8081/api/patients
+      - NOTE_API_URL=http://notes-service:8082/api/notes/patient
+    depends_on:
+      - patient-service
+      - notes-service
+
+  ################### GATEWAY ##########################
+  gateway-service:
+    build: ./gateway
+    container_name: gateway-app
+    ports:
+      - "8090:8090"
+    environment:
+      - PATIENT_API_URL=http://patient-service:8081
+      - NOTES_API_URL=http://notes-service:8082
+      - SCREENING_API_URL=http://screening-service:8083
+    depends_on:
+      - patient-service
+      - notes-service
+      - screening-service
+
+  ################### UI ##########################
+  ui-service:
+    build: ./ui
+    container_name: ui-app
+    ports:
+      - "8080:8080"
+    environment:
+      - PATIENT_API_URL=http://gateway-service:8090/api/patients
+      - NOTES_API_URL=http://gateway-service:8090/api/notes
+      - SCREENING_API_URL=http://gateway-service:8090/api/screening
+    depends_on:
+      - gateway-service
