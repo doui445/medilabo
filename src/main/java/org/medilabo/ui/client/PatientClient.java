@@ -32,18 +32,18 @@ public class PatientClient {
         return patients != null ? List.of(patients) : List.of();
     }
 
-    public void createPatient(PatientDTO patientDTO) {
+    public void createPatient(PatientDTO patient) {
         restClient.post()
                 .uri("")
-                .body(patientDTO)
+                .body(patient)
                 .retrieve()
                 .body(PatientDTO.class);
     }
 
-    public void updatePatient(Long id, PatientDTO patientDTO) {
+    public void updatePatient(Long id, PatientDTO patient) {
         restClient.put()
                 .uri("/{id}", id)
-                .body(patientDTO)
+                .body(patient)
                 .retrieve()
                 .body(PatientDTO.class);
     }

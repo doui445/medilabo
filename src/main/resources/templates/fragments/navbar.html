@@ -4,7 +4,22 @@
 <div th:fragment="headerNav">
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
 		<div class="container">
+			<a class="navbar-brand" th:href="@{/}">Medilabo Solutions</a>
 
+			<div class="collapse navbar-collapse">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item"><a class="nav-link" th:href="@{/patient/list}">Home</a></li>
+				</ul>
+
+				<div class="navbar-text">
+					<span class="user-info mr-3">
+						Logged as: <b sec:authentication="name">Guest</b>
+					</span>
+					<form class="btn" method="post" th:action="@{/logout}">
+						<button class="btn btn-outline-light btn-link nav-link btn-sm" type="submit">Logout</button>
+					</form>
+				</div>
+			</div>
 		</div>
 	</nav>
 </div>

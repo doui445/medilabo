@@ -1,6 +1,7 @@
 package org.medilabo.ui.dto;
 
 import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -15,6 +16,7 @@ public record PatientDTO(
 
         @NotNull(message = "Birth date is mandatory")
         @PastOrPresent(message = "Birth date shouldn't be in the futur")
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
         LocalDate birthDate,
 
         @NotBlank(message = "Gender is mandatory")

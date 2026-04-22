@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 	<th:block th:replace="~{fragments/head :: head-css}"></th:block>
 	<title>Patients</title>
@@ -36,6 +36,8 @@
 				<td style="width: 10%" th:text="${patient.address}"></td>
 				<td style="width: 10%" th:text="${patient.phone}"></td>
 				<td class="text-center" style="width: 15%">
+					<a sec:authorize="hasRole('DOCTOR')" th:href="@{/patient/details/{id}(id=${patient.id})}">Details</a>
+					<span sec:authorize="hasRole('DOCTOR')">&nbsp;|&nbsp;</span>
 					<a th:href="@{/patient/update/{id}(id=${patient.id})}">Edit</a>&nbsp;|&nbsp;
 					<a th:href="@{/patient/delete/{id}(id=${patient.id})}">Delete</a>
 				</td>
