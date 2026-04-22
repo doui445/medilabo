@@ -40,7 +40,7 @@ services:
     environment:
       # DATASOURCE CONFIGURATION
       # "mongodb" à la place de "localhost"
-      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/medilabo_notes
+      - SPRING_MONGODB_URI=mongodb://mongodb:27017/medilabo_notes
     depends_on:
       - mongodb
 
