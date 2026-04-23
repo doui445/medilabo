@@ -65,8 +65,9 @@ public class NotesUIController {
 
     @GetMapping("/delete/{id}")
     public String deleteNote(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
+        Long patientId = notesClient.getNoteById(id).patientId();
         notesClient.deleteNote(id);
         redirectAttributes.addFlashAttribute("successMessage", "Note deleted successfully!");
-        return "redirect:/patient/details/" + notesClient.getNoteById(id).patientId();
+        return "redirect:/patient/details/" + patientId;
     }
 }

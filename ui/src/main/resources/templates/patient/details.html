@@ -13,6 +13,16 @@
 		<h2>Patient Details</h2>
 	</div>
 
+	<!-- error message -->
+	<div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${errorMessage}">
+		<span th:text="${errorMessage}"></span>
+	</div>
+
+	<!-- success message -->
+	<div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${successMessage}">
+		<span th:text="${successMessage}"></span>
+	</div>
+
 	<div class="row mt-4">
 		<div class="col-12">
 			<h3>Diabetes Screening :
@@ -29,17 +39,21 @@
 
 	<div class="row mt-4">
 		<h4>Medical History</h4>
+	</div>
+
+	<div class="row mt-4">
 		<ul class="list-group" th:if="${not #lists.isEmpty(notes)}">
-			<div class="float-end">
-				<a th:href="@{/note/update/{id}(id=${note.id})}" class="btn btn-sm btn-outline-primary">Edit</a>
-				<a onclick="return confirm('Are you sure you want to delete this note?');"
-				   th:href="@{/note/delete/{id}(id=${note.id})}" class="btn btn-sm btn-outline-danger">Delete</a>
-			</div>
 			<li class="list-group-item text-dark" th:each="note : ${notes}"> <!-- Boucle sur les notes du patient -->
 				<strong th:text="${note.date}">Date</strong> - <strong th:text="${note.title}">Title</strong>
 				<p th:text="${note.content}">Content...</p>
+				<div class="float-end">
+					<a th:href="@{/note/update/{id}(id=${note.id})}" class="btn btn-sm btn-outline-primary">Edit</a>
+					<a onclick="return confirm('Are you sure you want to delete this note?');"
+					   th:href="@{/note/delete/{id}(id=${note.id})}" class="btn btn-sm btn-outline-danger">Delete</a>
+				</div>
 			</li>
 		</ul>
+
 		<div class="alert alert-info mt-2" th:if="${#lists.isEmpty(notes)}">
 			No notes available for this patient.
 		</div>
@@ -47,18 +61,6 @@
 
 	<div class="row mt-5">
 		<h4>Add a New Note</h4>
-
-		<!-- error message -->
-		<div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${errorMessage}">
-			<span th:text="${errorMessage}"></span>
-			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-		</div>
-
-		<!-- success message -->
-		<div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${successMessage}">
-			<span th:text="${successMessage}"></span>
-			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-		</div>
 
 		<form action="#" class="form-horizontal" method="post" style="width: 100%"
 		      th:action="@{/note/add}" th:object="${newNote}">
