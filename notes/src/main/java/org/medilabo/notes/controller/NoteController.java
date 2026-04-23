@@ -26,8 +26,6 @@ public class NoteController {
      */
     @PostMapping
     public ResponseEntity<NoteDTO> createNote(@Valid @RequestBody NoteDTO note) {
-        System.out.println("################################## aaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("Creating note: " + note.patientId());
         NoteDTO savedNote = noteService.saveNote(note);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedNote.id()).toUri();
         return ResponseEntity.created(location).body(savedNote);
