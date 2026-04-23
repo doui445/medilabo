@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/patient")
 @RequiredArgsConstructor
@@ -31,7 +33,9 @@ public class PatientUIController {
     public String showPatientDetails(@PathVariable("id") Long id, Model model) {
         model.addAttribute("patient", patientClient.getPatientById(id));
         model.addAttribute("screening", screeningClient.screenPatient(id));
-        model.addAttribute("notes", notesClient.getNotes(id));
+        List<NoteDTO> notes = notesClient.getNotes(id);
+        System.out.println("-----> NOMBRE DE NOTES RÉCUPÉRÉES : " + notes.size());
+        model.addAttribute("notes", notes);
         model.addAttribute("newNote", new NoteDTO(null, id, "", null, "", ""));
         return "patient/details";
     }

@@ -9,12 +9,16 @@ services:
       POSTGRES_DB: medilabo_patient
       POSTGRES_USER: root
       POSTGRES_PASSWORD: rootroot
+    volumes:
+      - pgdata:/var/lib/postgresql
 
   mongodb:
     image: mongo:8.2.7
     container_name: medilabo_mongo
     ports:
       - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
 
   ################### APIs ##########################
   patient-service:
@@ -51,7 +55,7 @@ services:
       - "8083:8083"
     environment:
       - PATIENT_API_URL=http://patient-service:8081/api/patients
-      - NOTE_API_URL=http://notes-service:8082/api/notes/patient
+      - NOTES_API_URL=http://notes-service:8082/api/notes
     depends_on:
       - patient-service
       - notes-service
@@ -83,3 +87,7 @@ services:
       - SCREENING_API_URL=http://gateway-service:8090/api/screening
     depends_on:
       - gateway-service
+
+volumes:
+  pgdata:
+  mongo_data:

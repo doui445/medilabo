@@ -39,7 +39,8 @@
 					<a sec:authorize="hasRole('DOCTOR')" th:href="@{/patient/details/{id}(id=${patient.id})}">Details</a>
 					<span sec:authorize="hasRole('DOCTOR')">&nbsp;|&nbsp;</span>
 					<a th:href="@{/patient/update/{id}(id=${patient.id})}">Edit</a>&nbsp;|&nbsp;
-					<a th:href="@{/patient/delete/{id}(id=${patient.id})}">Delete</a>
+					<a onclick="return confirm('Confirm delete?')"
+					   th:href="@{/patient/delete/{id}(id=${patient.id})}">Delete</a>
 				</td>
 			</tr>
 			</tbody>

@@ -30,10 +30,9 @@ public class SpringSecurityConfig {
      *
      * @param http the security configurator object
      * @return the configured security filter chain
-     * @throws Exception if an error occurs during configuration
      */
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/css/**").permitAll()
